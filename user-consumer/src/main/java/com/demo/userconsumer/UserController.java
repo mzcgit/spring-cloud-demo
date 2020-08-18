@@ -3,6 +3,7 @@ package com.demo.userconsumer;
 import com.demo.userapi.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author mzc
  */
 @RestController
+@RefreshScope
 public class UserController {
     @Value("${server.port}")
     String port;
@@ -26,6 +28,14 @@ public class UserController {
 
     @Autowired
     RestService rest;
+
+    @Value("${myconfig}")
+    String myconfig;
+
+    @GetMapping
+    public String getMyconfig() {
+        return myconfig;
+    }
 
     @GetMapping("/alive")
     public String alive() {
